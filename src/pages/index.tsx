@@ -115,7 +115,7 @@ export default function FullWidthGrid() {
                 price: number;
                 title: string;
               }) => (
-                <Grid item xs={1} md={3}>
+                <Grid item xs={1} md={3} key={p.id}>
                   <ActionAreaCard
                     category={p.category}
                     description={p.description}
@@ -139,7 +139,7 @@ export default function FullWidthGrid() {
   if (isError) {
     return (
       <div className="center">
-        We couldn't find your pokemon{" "}
+        We cannot find your products
         <span role="img" aria-label="sad">
           😢
         </span>

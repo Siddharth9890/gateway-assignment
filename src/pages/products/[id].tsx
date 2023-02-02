@@ -94,7 +94,7 @@ export default function Product() {
   if (isError) {
     return (
       <div className="center">
-        We couldn't find your pokemon{" "}
+        We cannot find your pokemon{" "}
         <span role="img" aria-label="sad">
           😢
         </span>
