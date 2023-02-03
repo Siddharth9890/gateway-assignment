@@ -14,70 +14,42 @@ import Cart from "./Cart";
 import axios from "axios";
 import { useQuery } from "react-query";
 import AddToCart from "./AddToCart";
-
-export type CartItemType = {
-  id: number;
-  category: string;
-  description: string;
-  image: string;
-  price: number;
-  title: string;
-  amount: number;
-};
+import { CartItemType } from "@/customTypes";
 
 export default function FullWidthGrid() {
   const [cartOpen, setCartOpen] = React.useState(false);
-  const [cartItems, setCartItems] = React.useState<CartItemType[]>([
-    {
-      amount: 10,
-      category: "mens",
-      description: "test",
-      id: 1,
-      image: "",
-      price: 100,
-      title: "test hai",
-    },
-    {
-      amount: 10,
-      category: "mens",
-      description: "test",
-      id: 1,
-      image: "",
-      price: 100,
-      title: "test hai",
-    },
-  ]);
-  const getTotalItems = (items: CartItemType[]) =>
-    items.reduce((acc, item) => acc + item.amount, 0);
+  const [cartItems, setCartItems] = React.useState<CartItemType[]>([]);
+  // const getTotalItems = (items: CartItemType[]) =>
+  //   items.reduce((acc, item) => acc + item.amount, 0);
 
-  const handleAddToCart = (clickedItem: CartItemType) => {
-    setCartItems((prev) => {
-      const isItemInCart = prev.find((item) => item.id === clickedItem.id);
+  // const handleAddToCart = (clickedItem: CartItemType) => {
+  //   setCartItems((prev) => {
+  //     const isItemInCart = prev.find((item) => item.id === clickedItem.id);
 
-      if (isItemInCart) {
-        return prev.map((item) =>
-          item.id === clickedItem.id
-            ? { ...item, amount: item.amount + 1 }
-            : item
-        );
-      }
+  //     if (isItemInCart) {
+  //       return prev.map((item) =>
+  //         item.id === clickedItem.id
+  //           ? { ...item, amount: item.amount + 1 }
+  //           : item
+  //       );
+  //     }
 
-      return [...prev, { ...clickedItem, amount: 1 }];
-    });
-  };
+  //     return [...prev, { ...clickedItem, amount: 1 }];
+  //   });
+  // };
 
-  const handleRemoveFromCart = (id: number) => {
-    setCartItems((prev) =>
-      prev.reduce((acc, item) => {
-        if (item.id === id) {
-          if (item.amount === 1) return acc;
-          return [...acc, { ...item, amount: item.amount - 1 }];
-        } else {
-          return [...acc, item];
-        }
-      }, [] as CartItemType[])
-    );
-  };
+  // const handleRemoveFromCart = (id: number) => {
+  //   setCartItems((prev) =>
+  //     prev.reduce((acc, item) => {
+  //       if (item.id === id) {
+  //         if (item.amount === 1) return acc;
+  //         return [...acc, { ...item, amount: item.amount - 1 }];
+  //       } else {
+  //         return [...acc, item];
+  //       }
+  //     }, [] as CartItemType[])
+  //   );
+  // };
 
   const fetchProducts = () =>
     axios.get(`https://fakestoreapi.com/products`).then(({ data }) => data);
@@ -93,9 +65,6 @@ export default function FullWidthGrid() {
         <AddToCart
           cartItems={cartItems}
           cartOpen={cartOpen}
-          getTotalItems={getTotalItems}
-          handleAddToCart={handleAddToCart}
-          handleRemoveFromCart={handleRemoveFromCart}
           setCartItems={setCartItems}
           setCartOpen={setCartOpen}
         />

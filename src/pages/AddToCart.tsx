@@ -1,39 +1,31 @@
 import { Badge, Drawer } from "@mui/material";
 import Cart from "./Cart";
-import { CartItemType } from ".";
 import { ShoppingCart } from "@mui/icons-material";
+import useUser from "@/hooks/useUser";
+import { CartItemType } from "@/customTypes";
 
 export default function AddToCart({
   cartItems,
   cartOpen,
-  handleAddToCart,
   setCartItems,
   setCartOpen,
-  getTotalItems,
-  handleRemoveFromCart,
 }: {
-  handleAddToCart: (clickedItem: CartItemType) => void;
   cartOpen: boolean;
   cartItems: CartItemType[];
   setCartItems: React.Dispatch<React.SetStateAction<CartItemType[]>>;
   setCartOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  handleRemoveFromCart: (id: number) => void;
-  getTotalItems: (items: CartItemType[]) => number;
 }) {
+  const [user, addItem, removeItem] = useUser();
   return (
     <>
       <Drawer anchor="right" open={cartOpen} onClose={() => setCartOpen(false)}>
         <Cart
-          cartItems={cartItems}
-          addToCart={handleAddToCart}
-          removeFromCart={handleRemoveFromCart}
+          cartItems={user}
+          addToCart={addItem}
+          removeFromCart={removeItem}
         />
       </Drawer>
-      <Badge
-        badgeContent={getTotalItems(cartItems)}
-        onClick={() => setCartOpen(true)}
-        color="error"
-      >
+      <Badge badgeContent={2} onClick={() => setCartOpen(true)} color="error">
         <ShoppingCart />
       </Badge>
     </>

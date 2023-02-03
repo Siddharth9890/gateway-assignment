@@ -9,7 +9,9 @@ import {
 } from "@mui/material";
 import axios from "axios";
 import { useQuery } from "react-query";
+import useUser from "@/hooks/useUser";
 export default function Product() {
+  const [user, addItem, removeItem] = useUser();
   const router = useRouter();
   const productId = typeof router.query?.id === "string" ? router.query.id : "";
   const fetchProduct = (id: string) =>
@@ -74,6 +76,7 @@ export default function Product() {
           <Button
             variant="contained"
             color="primary"
+            onClick={() => addItem(product)}
             sx={{
               display: "flex",
               justifyContent: "space-between",
